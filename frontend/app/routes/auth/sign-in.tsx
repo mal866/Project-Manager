@@ -58,7 +58,12 @@ export const SignIn = () => {
                             name="password"
                             render={({ field }) => (
                                 <FormItem>
+                                    <div className="flex items-center justify-between">
                                     <FormLabel>Password</FormLabel>
+                                    <Link to="/forgot-password" className="text-sm text-blue-500 hover:underline ml-auto">
+                                        Forgot Password?
+                                    </Link>
+                                    </div>
                                     <FormControl>
                                         <Input className="mt-2" type="password" placeholder="••••••••" {...field} />
                                     </FormControl>
@@ -74,11 +79,11 @@ export const SignIn = () => {
                     </form>
                 </Form>
 
-                <CardFooter>
+                <CardFooter className="flex items-center justify-center mt-3">
                     <div className="flex items-center justify-center">
                         <p className="text-sm text-muted-foreground">
                             Don't have an account?{" "}
-                            <Link to="/sign-up">Sign up</Link>
+                            <Link to="/sign-up" className="text-sm text-blue-500 hover:underline ml-auto">Sign up</Link>
                         </p>
                     </div>
                 </CardFooter>
