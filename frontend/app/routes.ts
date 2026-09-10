@@ -1,5 +1,5 @@
 import { type RouteConfig, index, layout, route } from "@react-router/dev/routes";
-//connects pages (e.g, clicking button from home page leads to sign up page)
+//connects pages (e.g, clicking sign up button from home page leads to sign up page)
 export default [
     layout("routes/auth/auth-layout.tsx", [
         index("routes/root/home.tsx"),

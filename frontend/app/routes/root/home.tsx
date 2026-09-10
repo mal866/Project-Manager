@@ -5,14 +5,12 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Card, CardAction, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Link } from 'react-router';
 
-
 export function meta({}: Route.MetaArgs) {
   return [
     { title: "Project Manager" },
     { name: "description", content: "Welcome to React Router!" },
   ];
 }
-
 
 const HomePage = () => {
   return (
