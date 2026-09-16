@@ -13,6 +13,19 @@ const registerUser = async (req, res) => {
         }
 
         const salt = await bcrypt.genSalt(10)
+        const hashPassword = await bcrypt.hash(password, salt)
+
+        const newUser = await User.create({
+            email,
+            password:hashPassword,
+            name
+        })
+
+        //todo - send email!
+
+        res.status(201).json({
+            message:"Verification email sent. Please check your inbox.",
+        })
 
     } catch (error) {
         console.log(error)
