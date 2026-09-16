@@ -4,6 +4,8 @@ import express from "express"
 import mongoose from "mongoose"
 import morgan from "morgan"
 
+import routes from "./routes/index.js"
+
 dotenv.config()
 
 const app = express()
@@ -30,6 +32,9 @@ app.get("/", async(req, res)=> {
         message:"Welcome to Project Management API"
     })
 })
+
+// http://localhost:5000/api-v1/
+app.use("/api-v1", routes)
 
 // error middleware
 app.use((err, req, res, next) => {
