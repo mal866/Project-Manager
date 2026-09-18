@@ -8,8 +8,12 @@ import {  Form, FormControl, FormItem, FormLabel, FormField, FormMessage } from 
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Link } from 'react-router'
+import { useSignUpMutation } from '@/hooks/use-auth'
+import { toast } from 'sonner'
 
-type SignUpFormData = z.infer<typeof signupSchema>
+
+export type SignUpFormData = z.infer<typeof signupSchema>
+
 
 export const SignUp = () => {
     const form = useForm<SignUpFormData>({
@@ -22,8 +26,20 @@ export const SignUp = () => {
         }
     })
 
+
+    const {mutate, isPending} = useSignUpMutation()
+
     const handleOnSubmit = (values: SignUpFormData) => {
-        console.log(values)
+        mutate(values, {
+            onSuccess: () => {
+                toast.success("Account created successfully!")
+            }, 
+            onError: (error: any) => {
+                const errorMessage = error.response?.data?.message || "An error occurrred"
+                console.log(error)
+                toast.error(errorMessage)
+            }
+        })
     }
 
   return (
@@ -40,21 +56,6 @@ export const SignUp = () => {
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(handleOnSubmit)} className="space-y-4">
 
-                        {/* name field */}
-                        <FormField
-                            control={form.control}
-                            name="name"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Full Name</FormLabel>
-                                    <FormControl>
-                                        <Input className="mt-2" type="text" placeholder="Jane Doe" {...field} />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
                         {/* email field */}
                         <FormField
                             control={form.control}
@@ -64,6 +65,21 @@ export const SignUp = () => {
                                     <FormLabel>Email Address</FormLabel>
                                     <FormControl>
                                         <Input className="mt-2" type="email" placeholder="email@example.com" {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        {/* name field */}
+                        <FormField
+                            control={form.control}
+                            name="name"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Full Name</FormLabel>
+                                    <FormControl>
+                                        <Input className="mt-2" type="text" placeholder="Jane Doe" {...field} />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
@@ -99,10 +115,9 @@ export const SignUp = () => {
                             )}
                         />
 
-                        <Button type="submit" className="w-full">
-                            Sign Up
+                        <Button type="submit" className="w-full" disabled={isPending}>
+                            {isPending ? "Signing up..." : "Sign up"}
                         </Button>
-
                     </form>
                 </Form>
 
